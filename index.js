@@ -65,20 +65,33 @@ async function run() {
 
         app.post('/bikes', async (req, res) => {
             const body = req.body
+            console.log(body)
             const result = await bikeCollection.insertOne(body)
             res.send(result)
         })
+        // app.post('/upload', async (req, res) => {
+        //     const body = req.body
+        //     console.log("upload bikes", body)
+        //     const result = await bikeCollection.insertOne(body)
+        //     res.send(result)
+        // })
 
         // delete method 
         app.delete("/bikes/:id", async (req, res) => {
             const id = req.params.id
-            console.log("delte", id)
             const query = { _id: new ObjectId(id) }
             const result = await bikeCollection.deleteOne(query)
             res.send(result)
         })
 
         // comment collection
+
+        app.get('/comment', async (req, res) => {
+            const result = await commentCollection.find().toArray()
+            res.send(result)
+        })
+
+
         app.post('/comment', async (req, res) => {
             const body = req.body
             const result = await commentCollection.insertOne(body)
